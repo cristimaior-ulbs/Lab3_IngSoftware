@@ -41,8 +41,10 @@ import org.rosterleague.entities.*;
 public class RequestBean implements Request, Serializable {
 
     private static final Logger logger = Logger.getLogger(RequestBean.class.getName());
+
     @PersistenceContext
     private EntityManager em;
+
     private CriteriaBuilder cb;
 
     @PostConstruct
@@ -523,6 +525,4 @@ public class RequestBean implements Request, Serializable {
         }
         return detailsList;
     }
-
-
 }

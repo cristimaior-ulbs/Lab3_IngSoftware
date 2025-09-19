@@ -16,7 +16,7 @@ public class MainServlet extends HttpServlet {
     @Inject
     Request ejbRequest;
 
-    PrintWriter printer = null;
+    PrintWriter printer;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ejbRequest.clearAllEntities();
