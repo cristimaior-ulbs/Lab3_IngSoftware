@@ -84,3 +84,4 @@ Differences from the original example:
 - Each time the endpoint is accessed, the database is cleared and repopulated (for simplicity). 
 Redeploying the application continues to drop and re-create the tables.
 - Code formatting and fixes for warnings in the code
+- Exception reporting is simplified - exceptions are printed in the servlet output

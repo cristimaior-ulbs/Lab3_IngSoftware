@@ -166,7 +166,8 @@ public class MainServlet extends HttpServlet {
             ejbRequest.addPlayer("P7", "T5");
 
         } catch (Exception ex) {
-            System.err.println("Caught an exception:");
+            printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
         }
     }
 
@@ -197,7 +198,8 @@ public class MainServlet extends HttpServlet {
             printer.println();
 
         } catch (Exception ex) {
-            System.err.println("Caught an exception:");
+            printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
         }
     }
 
@@ -287,7 +289,8 @@ public class MainServlet extends HttpServlet {
             printer.println();
 
         } catch (Exception ex) {
-            System.err.println("Caught an exception:");
+            printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
         }
     }
 
@@ -302,7 +305,8 @@ public class MainServlet extends HttpServlet {
             printer.println();
 
         } catch (Exception ex) {
-            System.err.println("Caught an exception:");
+            printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
         }
     }
 
