@@ -19,6 +19,7 @@ To simplify the database setup, it uses the JavaDB (Derby) as a database which c
 
 The next steps outline using the IntelliJ IDEA IDE to run the application.
 
+Make sure you have the "GlassFish" plugin installed in IntelliJ IDEA.
 To run the application locally, you need to add GlassFish as a run configuration in your IDE.
 Click edit configurations on the Run menu, add new configuration - select GlassFish Server Local, select your GlassFish 
 installation path and domain from the dropdown (domain1 by default), and then select the deployment artifact as this 
@@ -53,14 +54,33 @@ The application will be accessible at http://localhost:8080/RosterLeague-1.0-SNA
 
 Troubleshooting
 ===============
-When running the application, if you encounter an error related to the database connection, 
-ensure that the JavaDB (Derby) is started as described above. An example error message might look like this:
 
+Error: IntelliJ - Glassfish server not available as run configuration
+
+Solution: Settings>Plugins>Market Place: search and install the 'Glassfish' plugin
+
+
+`asadmin start-database`
+
+Error:
+```
+The java command "%~$PATH;i" is not executable.
+It was configured as PATH="C:\Program Files\Common.... a lot of paths here.."
+'"%~$PATH;i"' is not recognized as an internal or external command,
+operable program or batch file.
+```
+Solution: add the JAVA_HOME environment variable to your system environment variables with the path to the JDK, 
+OR edit <glassfish>/glassfish/config/config.bat (or config.sh) and set the java home path, for example:
+`set JAVA_HOME=C:\Program Files\Java\jdk-21\`
+
+
+Error: When running the application, if you encounter an error related to the database connection.
+An example error message might look like this:
 ```
 Internal Exception: 
  java.sql.SQLException: Failed to obtain/create connection
 ```
-
+Solution: ensure that the JavaDB (Derby) is started as described in "Running the Application".
 After starting the database, redeploy the application - there is no need to restart the server.
 
 Notes
