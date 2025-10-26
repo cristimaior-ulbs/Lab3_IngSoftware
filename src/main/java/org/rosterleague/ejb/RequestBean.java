@@ -77,6 +77,36 @@ public class RequestBean implements Request, Serializable {
         }
     }
 
+    List<Match> matches = new ArrayList<>();
+
+    @Override
+    public void addMatch(Match match) {
+
+        matches.add(match);
+    }
+
+    @Override
+    public List<Match> getMatchesByTeam(String teamId) {
+        List<Match> result = new ArrayList<>();
+        for (Match m : matches) {
+            if (m.getTeam1Id().equals(teamId) || m.getTeam2Id().equals(teamId)) {
+                result.add(m);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Match> getMatchesByLeague(String leagueId) {
+        List<Match> result = new ArrayList<>();
+        for (Match m : matches) {
+            if (m.getLeagueId().equals(leagueId)) {
+                result.add(m);
+            }
+        }
+        return result;
+    }
+
     @Override
     public void removePlayer(String playerId) {
         logger.info("removePlayer");

@@ -11,11 +11,19 @@
  */
 package org.rosterleague.common;
 
+import org.rosterleague.entities.Match;
+
 import java.util.List;
 
 
 public interface Request {
     void addPlayer(String playerId, String teamId);
+
+    void addMatch(Match match);
+
+    List<Match> getMatchesByTeam(String teamId);
+
+    List<Match> getMatchesByLeague(String leagueId);
 
     void createLeague(LeagueDetails leagueDetails);
 

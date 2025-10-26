@@ -1,7 +1,10 @@
 package org.rosterleague.servlet;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.http.*;
@@ -10,6 +13,7 @@ import org.rosterleague.common.LeagueDetails;
 import org.rosterleague.common.PlayerDetails;
 import org.rosterleague.common.Request;
 import org.rosterleague.common.TeamDetails;
+import org.rosterleague.entities.Match;
 
 @WebServlet(name = "mainServlet", value = "/")
 public class MainServlet extends HttpServlet {
@@ -28,6 +32,8 @@ public class MainServlet extends HttpServlet {
         getSomeInfo();
         getMoreInfo();
         removeInfo();
+
+        matchesAndStandings();
     }
 
     private void insertInfo() {
@@ -176,6 +182,8 @@ public class MainServlet extends HttpServlet {
             List<PlayerDetails> playerList;
             List<TeamDetails> teamList;
             List<LeagueDetails> leagueList;
+            List<Match> matches;
+
 
             printer.println("List all players in team T2: ");
             playerList = ejbRequest.getPlayersOfTeam("T2");
@@ -306,6 +314,46 @@ public class MainServlet extends HttpServlet {
 
         } catch (Exception ex) {
             printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
+        }
+    }
+
+    private void matchesAndStandings() {
+        try {
+            ejbRequest.addMatch(new Match("M1", "L1", "T1", "T2", 2, 1));
+            ejbRequest.addMatch(new Match("M2", "L1", "T2", "T5", 0, 0));
+            ejbRequest.addMatch(new Match("M3", "L1", "T1", "T5", 1, 3));
+
+            printer.println("Toate meciurile din L1:");
+            for (Match m : ejbRequest.getMatchesByLeague("L1")) {
+                printer.println(m);
+            }
+            printer.println();
+
+            Map<String, Integer> points = new HashMap<>();
+            for (Match m : ejbRequest.getMatchesByLeague("L1")) {
+                int p1 = 0, p2 = 0;
+                if (m.getScoreTeam1() > m.getScoreTeam2())
+                    p1 = 3;
+                else if (m.getScoreTeam1() < m.getScoreTeam2())
+                    p2 = 3;
+                else { p1 = 1; p2 = 1; }
+
+                points.put(m.getTeam1Id(), points.getOrDefault(m.getTeam1Id(), 0) + p1);
+                points.put(m.getTeam2Id(), points.getOrDefault(m.getTeam2Id(), 0) + p2);
+            }
+
+            printer.println("Clasament:");
+            List<Map.Entry<String, Integer>> sortat = new ArrayList<>(points.entrySet());
+            sortat.sort((a, b) -> b.getValue() - a.getValue());
+
+            for (Map.Entry<String, Integer> e : sortat) {
+                printer.println(e.getKey() + " - " + e.getValue() + " pts");
+            }
+            printer.println();
+
+        } catch (Exception ex) {
+            printer.println("Exceptie: " + ex.getMessage());
             ex.printStackTrace(printer);
         }
     }
